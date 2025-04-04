@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css"/>
+  <title>Calculadora</title>
+</head>
+<body>
+  <form id="calculadora">
+    <table>
+      <tr>
+        <td colspan="4"><input type="text" readonly id="resultado"></td>
+      </tr>
+      <tr>
+        <td><button type="button" id="button7">7</button></td>
+        <td><button type="button" id="button8">8</button></td>
+        <td><button type="button" id="button9">9</button></td>
+        <td><button type="button" id="Dividir">/</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" id="button4">4</button></td>
+        <td><button type="button" id="button5">5</button></td>
+        <td><button type="button" id="button6">6</button></td>
+        <td><button type="button" id="Multiplicar">*</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" id="button1">1</button></td>
+        <td><button type="button" id="button2">2</button></td>
+        <td><button type="button" id="button3">3</button></td>
+        <td><button type="button" id="Restar">-</button></td>
+      </tr>
+      <tr>
+        <td><button type="button" id="button0">0</button></td>
+        <td><button type="button" id="buttonp">.</button></td>
+        <td><button type="button" id="igual">=</button></td>
+        <td><button type="button" id="Sumar">+</button></td>
+      </tr>
+      <tr>
+        <td colspan="4"><button type="button" id="clear">BORRAR</button></td>
+      </tr>
+    </table>
+  </form>
+
+  <script>
+    function onButton0click() { resultado.value += '0'; }
+    function onButton1click() { resultado.value += '1'; }
+    function onButton2click() { resultado.value += '2'; }
+    function onButton3click() { resultado.value += '3'; }
+    function onButton4click() { resultado.value += '4'; }
+    function onButton5click() { resultado.value += '5'; }
+    function onButton6click() { resultado.value += '6'; }
+    function onButton7click() { resultado.value += '7'; }
+    function onButton8click() { resultado.value += '8'; }
+    function onButton9click() { resultado.value += '9'; }
+    function onButtonpclick() { resultado.value += '.'; }
+
+    function onButtonSumarclick() {
+      primerNumero = resultado.value;
+      operador = '+';
+      resultado.value = '';
+    }
+
+    function onButtonRestarclick() {
+      primerNumero = resultado.value;
+      operador = '-';
+      resultado.value = '';
+    }
+
+    function onButtonMultiplicarclick() {
+      primerNumero = resultado.value;
+      operador = '*';
+      resultado.value = '';
+    }
+
+    function onButtonDividirclick() {
+      primerNumero = resultado.value;
+      operador = '/';
+      resultado.value = '';
+    }
+
+    let resultado = null;
+    let primerNumero = '';
+    let operador = '';
+
+    window.onload = function () {
+      resultado = document.getElementById('resultado');
+
+      document.getElementById('button0').onclick = onButton0click;
+      document.getElementById('button1').onclick = onButton1click;
+      document.getElementById('button2').onclick = onButton2click;
+      document.getElementById('button3').onclick = onButton3click;
+      document.getElementById('button4').onclick = onButton4click;
+      document.getElementById('button5').onclick = onButton5click;
+      document.getElementById('button6').onclick = onButton6click;
+      document.getElementById('button7').onclick = onButton7click;
+      document.getElementById('button8').onclick = onButton8click;
+      document.getElementById('button9').onclick = onButton9click;
+      document.getElementById('buttonp').onclick = onButtonpclick;
+
+      document.getElementById('Sumar').onclick = onButtonSumarclick;
+      document.getElementById('Restar').onclick = onButtonRestarclick;
+      document.getElementById('Multiplicar').onclick = onButtonMultiplicarclick;
+      document.getElementById('Dividir').onclick = onButtonDividirclick;
+    };
+  </script>
+
+  <script src="js.js"></script>
+</body>
+</html>
