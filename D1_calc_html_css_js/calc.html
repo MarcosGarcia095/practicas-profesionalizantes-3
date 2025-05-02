@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculadora</title>
+</head>
+<body>
+    <form id="calculadora">
+        <table>
+            <tr>
+                <td colspan="4"><input type="text" readonly id="resultado"></td>
+            </tr>
+            <tr>
+                <td><button type="button" class="numero">7</button></td>
+                <td><button type="button" class="numero">8</button></td>
+                <td><button type="button" class="numero">9</button></td>
+                <td><button type="button" class="operacion" id="dividir">/</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" class="numero">4</button></td>
+                <td><button type="button" class="numero">5</button></td>
+                <td><button type="button" class="numero">6</button></td>
+                <td><button type="button" class="operacion" id="multiplicar">*</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" class="numero">1</button></td>
+                <td><button type="button" class="numero">2</button></td>
+                <td><button type="button" class="numero">3</button></td>
+                <td><button type="button" class="operacion" id="restar">-</button></td>
+            </tr>
+            <tr>
+                <td><button type="button" class="numero">0</button></td>
+                <td><button type="button" class="numero">.</button></td>
+                <td><button type="button" id="igual">=</button></td>
+                <td><button type="button" class="operacion" id="sumar">+</button></td>
+            </tr>
+            <tr>
+                <td colspan="4"><button type="button" id="clear">BORRAR</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <script src="js.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Impresora</title>
+  <style>
+    #printerStatus {
+      border: 2px solid #ccc;
+      padding: 15px;
+      width: 300px;
+      font-family: Arial, sans-serif;
+      margin-top: 20px;
+    }
+    #printerStatus p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+<button onclick="printer.imprimir('Documento ')">Imprimir Documento</button>
+<button onclick="printer.cargarPapel(10)">Cargar Papel </button>
+<button onclick="printer.recargarTinta(100)">Recargar Tinta </button>
+
+<div id="printerStatus"></div>
+
+<script type="text/javascript">
+class Impresora {
+  constructor() {
+    this.estado = "Lista"; // Lista | Imprimiendo | Sin papel
+    this.porcentajeTinta = 100.0; // 0 - 100
+    this.conectada = true;
+    this.papelDisponible = 5; // cantidad de hojas
+  }
+
+  imprimir(documento) {
+    if (!this.conectada) {
+      window.alert("Error: La impresora no está conectada.");
+      return;
+    }
+
+    if (this.porcentajeTinta <= 10) {
+      this.estado = "Sin tinta";
+      window.alert("Error: No hay tinta suficiente.");
+      this.actualizarEstado();
+      return;
+    }
+
+    if (this.papelDisponible <= 0) {
+      this.estado = "Sin papel";
+      window.alert("Error: No hay papel.");
+      this.actualizarEstado();
+      return;
+    }
+
+    this.estado = "Imprimiendo";
+    this.actualizarEstado();
+
+    setTimeout(() => {
+      this.papelDisponible--;
+      this.porcentajeTinta -= 10;
+      this.estado = "Lista";
+      alert("Impresión completada: " + documento);
+      this.actualizarEstado();
+    }, 1000);
+  }
+
+  cargarPapel(cantHojas) {
+    this.papelDisponible += cantHojas;
+    window.alert(`Se han cargado ${cantHojas} hojas de papel.`);
+    this.actualizarEstado();
+  }
+
+  recargarTinta(porcentaje) {
+    this.porcentajeTinta = Math.min(100, this.porcentajeTinta + porcentaje);
+    window.alert(`Se ha recargado tinta: ${porcentaje}%`);
+    this.actualizarEstado();
+  }
+
+  actualizarEstado() {
+    const statusDiv = document.getElementById("printerStatus");
+    statusDiv.innerHTML = `
+      <p><strong>Estado:</strong> ${this.estado}</p>
+      <p><strong>% Tinta:</strong> ${this.porcentajeTinta.toFixed(1)}%</p>
+      <p><strong>Papel disponible:</strong> ${this.papelDisponible} hojas</p>
+      <p><strong>Conectada:</strong> ${this.conectada ? "Sí" : "No"}</p>
+    `;
+  }
+}
+
+const printer = new Impresora();
+window.onload = () => printer.actualizarEstado();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Semaforo</title>
+</head>
+
+<style>
+  #trafficLight {
+    width: 100px;
+    height: 300px;
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+  }
+
+  .light {
+    width: 60px;
+    height: 60px;
+    background-color: gray;
+    border-radius: 50%;
+  }
+</style>
+
+<body>
+
+<div id="trafficLight">
+  <div id="red" class="light"></div>
+  <div id="yellow" class="light"></div>
+  <div id="green" class="light"></div>
+</div>
+
+<br>
+
+<button id="startBtn">Start</button>
+<button id="stopBtn">Stop</button>
+
+</body>
+
+<script type="text/javascript">
+
+function updateGUI(trafficLightObject) {
+    const red = document.getElementById('red');
+    const yellow = document.getElementById('yellow');
+    const green = document.getElementById('green');
+
+    // Reset all to gray
+    red.style.backgroundColor = "gray";
+    yellow.style.backgroundColor = "gray";
+    green.style.backgroundColor = "gray";
+
+    // Turn on the current light
+    if (trafficLightObject.currentState === "red") {
+        red.style.backgroundColor = "red";
+    } else if (trafficLightObject.currentState === "yellow") {
+        yellow.style.backgroundColor = "yellow";
+    } else if (trafficLightObject.currentState === "green") {
+        green.style.backgroundColor = "green";
+    }
+}
+
+function initGUI(trafficLightObject) {
+    let start = document.getElementById('startBtn');
+    let stop = document.getElementById('stopBtn');
+
+    start.onclick = () => {
+        trafficLightObject.start();
+    };
+
+    stop.onclick = () => {
+        trafficLightObject.stop();
+    };
+
+    updateGUI(trafficLightObject);
+}
+
+class TrafficLight {
+    constructor() {
+        this.states = ["red", "green", "yellow"];
+        this.currentIndex = 0;
+        this.intervalId = null;
+    }
+
+    get currentState() {
+        return this.states[this.currentIndex];
+    }
+
+    nextState() {
+        this.currentIndex = (this.currentIndex + 1) % this.states.length;
+        updateGUI(this);
+    }
+
+    start() {
+        if (!this.intervalId) { // Only start if not already running
+            this.intervalId = setInterval(() => {
+                this.nextState();
+            }, 1500); // Change every second
+        }
+    }
+
+    stop() {
+        if (this.intervalId) {
+            clearInterval(this.intervalId);
+            this.intervalId = null;
+        }
+    }
+}
+
+function main() {
+    let trafficLight = new TrafficLight();
+    initGUI(trafficLight);
+}
+
+window.onload = main;
+
+</script>
+
+</html>

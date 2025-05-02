@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Simulador de Auto</title>
+  <style>
+    #carStatus {
+      border: 2px solid #ccc;
+      padding: 15px;
+      width: 320px;
+      font-family: Arial, sans-serif;
+      margin-top: 20px;
+    }
+    #carStatus p {
+      margin: 5px 0;
+    }
+  </style>
+</head>
+<body>
+
+
+<button id="powerBtn">Encender/Apagar</button>
+<button id="accelerateBtn">Acelerar</button>
+<button id="brakeBtn">Frenar</button>
+<button id="leftBtn">Girar Izquierda</button>
+<button id="rightBtn">Girar Derecha</button>
+<button id="gearBtn">Cambiar Velocidad</button>
+<button id="fuelBtn">Cargar Nafta (+20)</button>
+
+<div id="carStatus"></div>
+
+<script type="text/javascript">
+
+class Auto {
+  constructor() {
+    this.motor = "2.0";
+    this.encendido = false;
+    this.combustible = 100;
+    this.velocidadActual = 0;
+  }
+
+  toggleEncendido() {
+    this.encendido = !this.encendido;
+    alert(this.encendido ? "Auto encendido" : "Auto apagado");
+    this.actualizarEstado();
+    return this.encendido;
+  }
+
+  acelerar() {
+    if (!this.encendido) {
+      alert("Primero encendé el auto.");
+      return;
+    }
+    if (this.combustible <= 0) {
+      alert("Sin combustible.");
+      return;
+    }
+    this.combustible = Math.max(0, this.combustible - 5);
+    alert("Acelerando...");
+    this.actualizarEstado();
+  }
+
+  frenar() {
+    if (!this.encendido) {
+      alert("El auto está apagado.");
+      return;
+    }
+    alert("Frenando...");
+    this.actualizarEstado();
+  }
+
+  direccion(sentido) {
+    if (!this.encendido) {
+      alert("El auto está apagado.");
+      return;
+    }
+    if (sentido === "izquierda" || sentido === "derecha") {
+      alert("Girando a la " + sentido);
+    } else {
+      alert("Dirección inválida");
+    }
+    this.actualizarEstado();
+  }
+
+  cambiarVelocidad(marcha) {
+    if (!this.encendido) {
+      alert("El auto está apagado.");
+      return;
+    }
+    if (Number.isInteger(marcha) && marcha >= 0 && marcha <= 6) {
+      this.velocidadActual = marcha;
+      alert(`Velocidad cambiada a marcha ${marcha}`);
+    } else {
+      alert("Marcha inválida. Debe ser entre 0 y 6.");
+    }
+    this.actualizarEstado();
+  }
+
+  cargarNafta(cantidad) {
+    this.combustible = Math.min(100, this.combustible + cantidad);
+    alert(`Se cargó ${cantidad}% de combustible.`);
+    this.actualizarEstado();
+  }
+
+  actualizarEstado() {
+    const statusDiv = document.getElementById("carStatus");
+    statusDiv.innerHTML = `
+      <p><strong>Motor:</strong> ${this.motor}</p>
+      <p><strong>Encendido:</strong> ${this.encendido ? "Sí" : "No"}</p>
+      <p><strong>% de Combustible:</strong> ${this.combustible}%</p>
+      <p><strong>Velocidad Actual (marcha):</strong> ${this.velocidadActual}</p>
+    `;
+  }
+}
+
+function initGUI(auto) {
+  document.getElementById("powerBtn").onclick = () => auto.toggleEncendido();
+  document.getElementById("accelerateBtn").onclick = () => auto.acelerar();
+  document.getElementById("brakeBtn").onclick = () => auto.frenar();
+  document.getElementById("leftBtn").onclick = () => auto.direccion("izquierda");
+  document.getElementById("rightBtn").onclick = () => auto.direccion("derecha");
+  document.getElementById("gearBtn").onclick = () => {
+    const marcha = parseInt(prompt("Ingrese velocidad (0-6):"));
+    auto.cambiarVelocidad(marcha);
+  };
+  document.getElementById("fuelBtn").onclick = () => auto.cargarNafta(20);
+
+  auto.actualizarEstado();
+}
+
+function main() {
+  let auto = new Auto();
+  initGUI(auto);
+}
+
+window.onload = main;
+
+</script>
+</body>
+</html>
