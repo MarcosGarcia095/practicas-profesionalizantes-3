@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        let circuit =
+        {
+            components: new map(),
+            connections: new map()
+        }
+
+        circuit.components.set('A', {in_a: null, in_b:null, in_c:null} )
+        circuit.components.set('B', {in_a: null, in_b:null} )
+        circuit.components.set('C', {in_a:null, in_b:null} )
+        circuit.components.set('D', {in_a: null} )
+        circuit.components.set('E', {in_a: null, in_b:null} )
+        circuit.components.set('F', {in_a:null} )
+
+        circuit.components.set('AB', [circuit.components.get('A').out, circuit.components.get('B').in_a]);
+
+        //---------------------
+        circuit.components.set('A', {in:[1,2,3], out:null} )
+        circuit.components.set('B', {in:[1,2], out:null} )
+        circuit.components.set('AB', [circuit.components.get('A').out, circuit.components.get('B').in[1] ]);
+
+    </script>
+</body>
+</html>
