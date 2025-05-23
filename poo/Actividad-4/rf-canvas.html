@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Canvas Rectángulo - Auto</title>
+    <style>
+        body {
+            width: 41.6%;
+            height: 50%;
+            border: 2px solid black;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<script>
+class Rectangle {
+    constructor(x, y, width, height, angle = 0, color = 'blue') {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.angle = angle;
+        this.color = color;
+    }
+
+    draw(ctx) {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.angle);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(-this.width / 2, -this.height / 2, this.width, this.height);
+        ctx.restore();
+    }
+
+    rotate(radians) {
+        this.angle += radians;
+    }
+
+    move(distance) {
+        this.x += Math.cos(this.angle) * distance;
+        this.y += Math.sin(this.angle) * distance;
+    }
+}
+
+class RectangleController {
+    constructor(rectangle, ctx, canvas) {
+        this.rectangle = rectangle;
+        this.ctx = ctx;
+        this.canvas = canvas;
+        this.initKeyListener();
+    }
+
+    clearCanvas() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+
+    drawRectangle() {
+        this.clearCanvas();
+        this.rectangle.draw(this.ctx);
+    }
+
+    initKeyListener() {
+        document.addEventListener('keydown', (event) => {
+            switch (event.key) {
+                case 'ArrowUp':
+                    this.handleUpArrow();
+                    break;
+                case 'ArrowDown':
+                    this.handleDownArrow();
+                    break;
+                case 'ArrowLeft':
+                    this.handleLeftArrow();
+                    break;
+                case 'ArrowRight':
+                    this.handleRightArrow();
+                    break;
+            }
+
+            this.drawRectangle();
+        });
+    }
+
+    handleUpArrow() {
+        const moveAmount = 5;
+        this.rectangle.move(moveAmount);
+    }
+
+    handleDownArrow() {
+        const moveAmount = -5;
+        this.rectangle.move(moveAmount);
+    }
+
+    handleLeftArrow() {
+        const rotateAmount = -Math.PI / 30;
+        this.rectangle.rotate(rotateAmount);
+    }
+
+    handleRightArrow() {
+        const rotateAmount = Math.PI / 30;
+        this.rectangle.rotate(rotateAmount);
+    }
+}
+
+function main() {
+    // Crear el canvas y el contexto
+    const canvas = document.createElement('canvas');
+    canvas.width = 800;
+    canvas.height = 400;
+    document.body.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+
+    const auto = new Rectangle(200, 200, 100, 50);
+
+    const controller = new RectangleController(auto, ctx, canvas);
+
+    
+    controller.drawRectangle();
+}
+
+// Llamar a main cuando la ventana cargue
+window.onload = main;
+
+</script>
+</body>
+</html>
