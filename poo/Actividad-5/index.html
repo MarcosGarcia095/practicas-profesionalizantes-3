@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Figuras</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Sistema de Figuras</h1>
+
+    <input type="color" id="color-picker" value="#ff0000">
+    <button id="create-rectangle">Crear Rectángulo</button>
+    <button id="create-circle">Crear Círculo</button>
+    <button id="create-triangle">Crear Triángulo</button>
+
+    <p>Figura activa: <span id="active-figure">Ninguna</span></p>
+
+    <canvas id="canvas" width="600" height="400"></canvas>
+
+    <h2>Figuras</h2>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Tipo</th>
+                <th>ID</th>
+            </tr>
+        </thead>
+        <tbody id="figure-table"></tbody>
+    </table>
+
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
