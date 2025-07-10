@@ -14,6 +14,22 @@
 </head>
 <body>
 <script>
+    class Circle {
+	constructor(R){
+		this.radius = R;
+		}
+	getArea(){
+		return Math.PI*Math.pow(this.radius, 2)
+	}
+	getPerimeter(){
+		return 2*Math.PI*this.radius
+	}
+}
+
+
+ /*unquote and use run to test these cases:*/
+
+
 class Rectangle {
     constructor(x, y, width, height, angle = 0, color = 'blue') {
         this.x = x;
@@ -76,8 +92,6 @@ class RectangleController {
                     this.handleRightArrow();
                     break;
             }
-
-            this.drawRectangle();
         });
     }
 
